@@ -255,10 +255,12 @@ namespace {
 		typedef alg::lie<S, Q, WIDTH, DEPTH> LIE;
 		typedef alg::maps<S, Q, WIDTH, DEPTH> MAPS;
 		typedef alg::cbh<S, Q, WIDTH, DEPTH> CBH;
+		Py_BEGIN_ALLOW_THREADS;
 		LIE logans = GetLogSignature<LIE, CBH, WIDTH>(stream);
 		MAPS maps;
 		TENSOR signature = exp(maps.l2t(logans));
 		unpack_tensor_to_SNK<S, TENSOR, WIDTH, DEPTH>(signature, snk);
+		Py_END_ALLOW_THREADS;
 		return true;
 	}
 
@@ -322,8 +324,10 @@ namespace {
 	{
 		typedef alg::lie<S, Q, WIDTH, DEPTH> LIE;
 		typedef alg::cbh<S, Q, WIDTH, DEPTH> CBH;
+		Py_BEGIN_ALLOW_THREADS;
 		LIE logans = GetLogSignature<LIE, CBH, WIDTH>(stream);
 		unpack_lie_to_SNK<S, LIE, WIDTH, DEPTH>(logans, snk);
+		Py_END_ALLOW_THREADS;
 		return true;
 	}
 
